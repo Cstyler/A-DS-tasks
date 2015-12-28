@@ -7,41 +7,42 @@
 #define OUT 0
 #define IN 1
 
-struct elem {
+typedef struct elem {
     struct elem *next;
     char *word;
-};
+    unsigned int len;
+} elem_t;
 
-struct elem *initSingleLinkedList()
+elem_t *initSingleLinkedList()
 {
-        struct elem *l = calloc(1, sizeof(struct elem));
-	return l;
+        elem_t *l = calloc(1, sizeof(elem_t));
+        return l;
 }
 
-void insertAfter(struct elem *x, struct elem *y)
+void insertAfter(elem_t *x, elem_t *y)
 {
-	struct elem *z = x->next;
+	elem_t *z = x->next;
 	x->next = y;
 	y->next = z;
 }
 
-char compare(struct elem *x, struct elem *y)
+char compare(elem_t *x, elem_t *y)
 {
-	return strlen(x->word) > strlen(y->word) ? 1 : 0;
+	return x->len > y->len ? 1 : 0;
 }
 
-void swap(struct elem* x)
+void swap(elem_t* x)
 {
-	struct elem *a = x->next;
-	struct elem *b = a->next;
+	elem_t *a = x->next;
+	elem_t *b = a->next;
 	a->next = b->next;
 	x->next = b;
 	b->next = a;
 }
 
-struct elem *bsort(struct elem *list)
+elem_t *bsort(elem_t *list)
 {
-	struct elem *t = NULL, *bound = t, *i, *j;
+	elem_t *t = NULL, *bound = t, *i, *j;
 	while(t != list) {
 		bound = t, t = list, i = list, j = list->next;
 		while(j->next != bound) {
@@ -88,16 +89,17 @@ int main()
 		}
 	free(s);
 
-	struct elem *list = initSingleLinkedList();
-	struct elem *a = malloc(n * sizeof(struct elem));
+	elem_t *list = initSingleLinkedList();
+	elem_t *a = malloc(n * sizeof(elem_t));
 	for(i = n - 1; i >= 0; i--) {
 		a[i].word = ss[i];
+                a[i].len = strlen(ss[i]);
 		insertAfter(list, &a[i]);
 	}
 
 	list = bsort(list);
 
-	struct elem *el = list->next;
+	elem_t *el = list->next;
 	while(el != NULL) {
 		printf("%s ", el->word);
 		el = el->next;

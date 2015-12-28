@@ -53,7 +53,7 @@ def main():
         for line in repl:
             f.write(line)
     if mode != 2:
-      os.system('gcc -o %s -g "%s.c" -lm' % (progname, progname))
+      os.system('gcc -o %s -g "%s.c" -lm -std=gnu99' % (progname, progname))
     testFolderPath = os.path.abspath('..') + '/tests/' + progname + '/'
     testFiles = []
     if mode == 0:
