@@ -61,7 +61,7 @@ int partition(int low, int high, int *base, int (*compare)(int *a, int *b))
         return i;
 }
 
-void quicksortrec(int low, int high, int *base, int (*compare)(int *a, int *b))
+void quickSortRec(int low, int high, int *base, int (*compare)(int *a, int *b))
 {
         stack_t st = initStack(high - low + 1);
         task_t starttask;
@@ -84,9 +84,9 @@ void quicksortrec(int low, int high, int *base, int (*compare)(int *a, int *b))
         free(st.data);
 }
 
-void quicksort(int nel, int *base, int (*compare)(int *a, int *b))
+void quickSort(int nel, int *base, int (*compare)(int *a, int *b))
 {
-        quicksortrec(0, nel - 1, base, compare);
+        quickSortRec(0, nel - 1, base, compare);
 }
 
 int main()
@@ -96,7 +96,7 @@ int main()
         int* arr = (int*)malloc(n * sizeof(int));
         for(i = 0; i < n; i++)
                 scanf("%d", arr + i);
-        quicksort(n, arr, compare);
+        quickSort(n, arr, compare);
         for(i = 0; i < n; i++)
                 printf("%d ", arr[i]);
         printf("\n");
